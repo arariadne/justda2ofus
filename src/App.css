@@ -1,0 +1,152 @@
+/* Reset default margins */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.main-wrapper {
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* The white rounded card in the center */
+.glass-card {
+  background: white;
+  width: 90%;
+  max-width: 650px;
+  padding: 50px 30px;
+  border-radius: 40px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.diary-title {
+  font-family: 'Arial Black', sans-serif;
+  color: #e65fa1; /* Matching the pink in your image */
+  font-size: 3.5rem;
+  margin: 0;
+  letter-spacing: 2px;
+}
+
+.diary-subtitle {
+  font-family: 'Brush Script MT', cursive;
+  color: #e65fa1;
+  font-size: 2.5rem;
+  margin: -10px 0 30px 0;
+}
+
+.avatar-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.avatar {
+  width: 130px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+.pixel-heart {
+  font-size: 2rem;
+}
+
+/* Password and Input Row */
+.auth-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.pass-label {
+  font-family: sans-serif;
+  font-weight: bold;
+  color: #e65fa1;
+}
+
+.input-group {
+  display: flex;
+  background-color: #c2f9bb; /* Light green from your design */
+  border-radius: 25px;
+  overflow: hidden;
+  border: 1px solid #999;
+}
+
+.password-field {
+  background: transparent;
+  border: none;
+  padding: 10px 15px;
+  font-size: 1rem;
+  outline: none;
+  color: #555;
+}
+
+.enter-btn {
+  background-color: #8e8e8e; /* Gray button from image */
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+}
+
+.enter-btn:hover {
+  background-color: #707070;
+}
+
+.glass-card {
+  background:rgba(194, 249, 187, 0.6);
+  width: 90%;
+  max-width: 650px;
+  padding: 50px 30px;
+  border-radius: 40px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+  text-align: center;
+  /* Floating animation */
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
+
+.avatar {
+  width: 130px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 15px;
+  border: 4px solid white;
+  transition: box-shadow 0.3s ease;
+}
+
+.avatar:hover {
+  box-shadow: 0 10px 20px rgba(230, 95, 161, 0.3);
+}
+
+.input-group {
+  display: flex;
+  background-color: #c2f9bb;
+  border-radius: 25px;
+  overflow: hidden;
+  border: 1px solid #999;
+  transition: transform 0.2s ease;
+}
+
+.input-group:focus-within {
+  transform: scale(1.05); /* Grow slightly when typing */
+  box-shadow: 0 0 15px rgba(194, 249, 187, 0.6);
+}
