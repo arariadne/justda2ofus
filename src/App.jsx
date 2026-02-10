@@ -36,7 +36,7 @@ function App() {
             className="glass-card"
           >
             <h1 className="diary-title">EPOY & ELAI</h1>
-            <p className="diary-subtitle">online diary</p>
+            <p className="diary-subtitle">digital diary</p>
             <div className="avatar-section">
               <img src={epoyImg} alt="Epoy" className="avatar" />
               <span className="pixel-heart">❤️</span>
