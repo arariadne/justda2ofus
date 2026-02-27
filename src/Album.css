@@ -404,3 +404,204 @@ body { background: var(--bg); color: var(--text); }
   padding: 12px;
   box-shadow: var(--shadow);
 }
+
+/* Multi preview grid */
+.ig-previewGrid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 8px;
+}
+
+@media (max-width: 520px){
+  .ig-previewGrid{ grid-template-columns: repeat(2, 1fr); }
+}
+
+.ig-previewTile{
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  height: 110px;
+}
+
+.ig-previewTile img,
+.ig-previewTile video{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ig-previewTile video{
+  pointer-events: none;
+}
+
+/* PDF preview tile */
+.ig-pdfTile{
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 10px;
+  text-align: center;
+}
+
+.ig-pdfIcon{
+  font-weight: 900;
+  font-size: 14px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #efefef;
+  border: 1px solid var(--border);
+  margin-bottom: 6px;
+}
+
+.ig-pdfName{
+  font-size: 12px;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+
+/* Carousel */
+.ig-carouselFrame{
+  width: 100%;
+}
+
+.ig-carouselNav{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+}
+
+.ig-navBtn{
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: 10px;
+  width: 38px;
+  height: 38px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.ig-navBtn:disabled{
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.ig-dots{
+  display: flex;
+  gap: 6px;
+  flex: 1;
+  justify-content: center;
+}
+
+.ig-dot{
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: #d7d7d7;
+}
+
+.ig-dot.active{
+  background: var(--primary);
+}
+
+/* PDF link in post */
+.ig-pdfLink{
+  display: block;
+  padding: 24px;
+  text-align: center;
+  color: var(--primary);
+  font-weight: 800;
+  text-decoration: none;
+}
+.ig-pdfLink:hover{
+  text-decoration: underline;
+}
+
+/* Album filter + download bar in topbar */
+.ig-albumFilter{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  justify-content: center;
+}
+
+.ig-downloadBar{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ig-ghostBtn{
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: 10px;
+  padding: 9px 12px;
+  font-weight: 800;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.ig-ghostBtn:hover{
+  background: #f2f2f2;
+}
+
+.ig-ghostBtn:disabled{
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ig-primaryBtnSm{
+  padding: 9px 12px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.ig-formRowAlbum{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+/* Selection row below post for downloads */
+.ig-selectRow{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px 14px;
+  border-top: 1px solid var(--border);
+  background: #fff;
+}
+
+.ig-check{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 10px;
+  cursor: pointer;
+  user-select: none;
+  background: #fafafa;
+}
+
+.ig-check input{
+  accent-color: var(--primary);
+}
+
+.ig-checkLabel{
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.ig-letterCard{
+  padding: 14px;
+}

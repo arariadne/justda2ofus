@@ -1,0 +1,206 @@
+:root{
+  --pink: #e65fa1;
+  --soft: #ffe4f0;
+  --border: #dbdbdb;
+  --text: #262626;
+  --muted: #8e8e8e;
+}
+
+.letter-wrap{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.letter-head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.letter-title{
+  font-weight: 900;
+  font-size: 16px;
+}
+
+.letter-sub{
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.letter-openBtn{
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+.letter-openBtn:hover{ background: #f5f5f5; }
+
+/* Envelope */
+.envelope{
+  position: relative;
+  height: 220px;
+  border-radius: 16px;
+  cursor: pointer;
+  user-select: none;
+  background: linear-gradient(180deg, #fff, #fff);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+/* Back + front shapes */
+.env-back{
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #fff 0%, #fff 60%, #fff7fb 100%);
+}
+
+.env-front{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 58%;
+  background: #fff;
+  border-top: 1px solid var(--border);
+}
+
+.env-flap{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 58%;
+  background: var(--soft);
+  transform-origin: top;
+  transform: rotateX(0deg);
+  transition: transform 0.55s ease;
+  border-bottom: 1px solid var(--border);
+}
+
+.env-heart{
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--pink);
+  color: #fff;
+  font-weight: 900;
+  box-shadow: 0 10px 22px rgba(230,95,161,0.25);
+}
+
+/* Paper */
+.paper{
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 10px;
+  height: 180px;
+  background: #fffdf7;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 14px 35px rgba(0,0,0,0.10);
+  transform: translateY(120px);
+  transition: transform 0.6s ease;
+  cursor: default;
+}
+
+.paper-top{
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.paper-to{
+  font-weight: 900;
+  color: var(--text);
+}
+
+.paper-album{
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Scrollable letter area */
+.paper-text{
+  width: 100%;
+  height: 105px;            /* fixed height so it can scroll */
+  resize: none;
+  border: 1px dashed rgba(0,0,0,0.18);
+  border-radius: 12px;
+  padding: 10px;
+  outline: none;
+  font-size: 13px;
+  line-height: 1.45;
+  overflow-y: auto;         /* ✅ scroll inside paper */
+  background: rgba(255,255,255,0.75);
+}
+
+.paper-actions{
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.paper-save{
+  border: none;
+  background: var(--pink);
+  color: white;
+  padding: 9px 12px;
+  border-radius: 10px;
+  font-weight: 900;
+  cursor: pointer;
+}
+.paper-save:disabled{
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Open animation */
+.envelope.open .env-flap{
+  transform: rotateX(160deg);
+}
+
+.envelope.open .paper{
+  transform: translateY(0px);
+}
+
+/* Latest preview */
+.latest{
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px;
+  background: #fff;
+}
+
+.latest-title{
+  font-weight: 900;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.latest-body{
+  white-space: pre-wrap;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text);
+  max-height: 130px;
+  overflow-y: auto; /* scroll if long */
+}
+
+.latest-empty{
+  font-size: 13px;
+  color: var(--muted);
+}
