@@ -26,14 +26,12 @@ async function uploadToCloudinary(file, onProgress) {
   const form = new FormData();
   form.append("file", file);
   form.append("upload_preset", UPLOAD_PRESET);
-  // Optional: keep uploads organized in Cloudinary
   form.append("folder", "memories");
 
   if (onProgress) onProgress(15);
 
   const res = await fetch(endpoint, { method: "POST", body: form });
 
-  // Read the real error message if it fails
   const text = await res.text();
   let data;
   try {
@@ -48,8 +46,7 @@ async function uploadToCloudinary(file, onProgress) {
   }
 
   if (onProgress) onProgress(100);
-
-  return data; // secure_url, public_id, resource_type, etc.
+  return data;
 }
 
 const Album = () => {
@@ -72,7 +69,6 @@ const Album = () => {
     return () => unsub();
   }, []);
 
-  // Clean up object URL to avoid memory leaks
   useEffect(() => {
     return () => {
       if (previewUrl) URL.revokeObjectURL(previewUrl);
@@ -82,7 +78,6 @@ const Album = () => {
   const onPickFile = (e) => {
     const f = e.target.files?.[0];
     if (!f) return;
-
     setFile(f);
     setPreviewUrl(URL.createObjectURL(f));
   };
@@ -96,29 +91,25 @@ const Album = () => {
     try {
       let uploadFile = file;
 
-      // Compress images (not videos)
       if (file.type.startsWith("image/")) {
         uploadFile = await imageCompression(file, {
           maxSizeMB: 0.5,
-          maxWidthOrHeight: 1024,
+          maxWidthOrHeight: 1080,
           useWebWorker: true,
         });
       }
 
-      // Upload to Cloudinary
       const cloud = await uploadToCloudinary(uploadFile, setProgress);
 
-      // Save Cloudinary URL + info to Firestore
       await addDoc(collection(db, "images"), {
         imageUrl: cloud.secure_url,
-        publicId: cloud.public_id, // store this if you later add server-side delete
-        resourceType: cloud.resource_type, // "image" | "video" | "raw"
+        publicId: cloud.public_id,
+        resourceType: cloud.resource_type,
         caption: caption.trim(),
         category,
         timestamp: serverTimestamp(),
       });
 
-      // Reset UI
       setFile(null);
       if (previewUrl) URL.revokeObjectURL(previewUrl);
       setPreviewUrl(null);
@@ -137,25 +128,25 @@ const Album = () => {
 
   const handleDelete = async (id) => {
     if (!window.confirm("Delete memory?")) return;
-
     await deleteDoc(doc(db, "images", id));
-
-    // NOTE:
-    // This deletes from Firestore only.
-    // To delete from Cloudinary too, you need a backend (Firebase Function),
-    // because Cloudinary delete requires your API secret (never in frontend).
   };
 
   const renderPreview = () => {
-    if (!previewUrl || !file) return null;
+    if (!previewUrl || !file) return (
+      <div className="ig-dropzone">
+        <div className="ig-dropzoneIcon">＋</div>
+        <div className="ig-dropzoneText">Choose a photo or video</div>
+        <div className="ig-dropzoneSub">Share a new memory ✨</div>
+      </div>
+    );
 
     const isVideo = file.type.startsWith("video/");
     return (
-      <div className="preview-box">
+      <div className="ig-previewWrap">
         {isVideo ? (
-          <video src={previewUrl} controls />
+          <video className="ig-previewMedia" src={previewUrl} controls />
         ) : (
-          <img src={previewUrl} alt="preview" />
+          <img className="ig-previewMedia" src={previewUrl} alt="preview" />
         )}
       </div>
     );
@@ -163,81 +154,144 @@ const Album = () => {
 
   const renderMedia = (m) => {
     const isVideo = m.resourceType === "video";
-    return (
-      <div className="media-box">
-        {isVideo ? (
-          <video src={m.imageUrl} controls />
-        ) : (
-          <img src={m.imageUrl} alt="memory" />
-        )}
-      </div>
+    return isVideo ? (
+      <video className="ig-postMedia" src={m.imageUrl} controls />
+    ) : (
+      <img className="ig-postMedia" src={m.imageUrl} alt="memory" />
     );
   };
 
   return (
-    <div className="album-container">
-      <h2 className="album-header">📸 Our Memories</h2>
-
-      <div className="upload-card">
-        {renderPreview()}
-
-        <input type="file" accept="image/*,video/*" onChange={onPickFile} />
-
-        <input
-          className="caption-input"
-          type="text"
-          placeholder="Caption..."
-          value={caption}
-          onChange={(e) => setCaption(e.target.value)}
-        />
-
-        <select
-          className="category-select"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          <option>General</option>
-          <option>Dates</option>
-          <option>Travel</option>
-          <option>Food</option>
-          <option>Random</option>
-        </select>
-
-        <button className="save-btn" onClick={handleUpload} disabled={loading}>
-          {loading ? `Storing... ${progress}%` : "Save Memory"}
-        </button>
+    <div className="ig-page">
+      {/* Top Bar */}
+      <div className="ig-topbar">
+        <div className="ig-topbarInner">
+          <div className="ig-logo">Memories</div>
+          <div className="ig-search">
+            <span className="ig-searchIcon">⌕</span>
+            <input placeholder="Search (mock)" disabled />
+          </div>
+          <div className="ig-topActions">
+            <button className="ig-iconBtn" title="Home">⌂</button>
+            <button className="ig-iconBtn" title="Messages">✉</button>
+            <button className="ig-iconBtn" title="Explore">✦</button>
+            <div className="ig-avatarSm" title="You" />
+          </div>
+        </div>
       </div>
 
-      <div className="memory-grid">
-        {memories.map((m) => (
-          <div key={m.id} className="memory-card">
-            {renderMedia(m)}
+      {/* Main */}
+      <div className="ig-layout">
+        {/* Feed */}
+        <div className="ig-feed">
+          {/* Composer */}
+          <div className="ig-card ig-composer">
+            <div className="ig-cardHeader">
+              <div className="ig-avatar" />
+              <div className="ig-userMeta">
+                <div className="ig-username">justda2ofus</div>
+                <div className="ig-sub">Create a new post</div>
+              </div>
+            </div>
 
-            <div className="memory-details">
-              <div className="memory-top">
-                <span className="category-tag">{m.category || "General"}</span>
-                <div className="admin-actions">
-                  <button
-                    title="Delete"
-                    onClick={() => handleDelete(m.id)}
-                    aria-label="Delete"
-                  >
-                    🗑️
-                  </button>
+            <label className="ig-filePick">
+              <input type="file" accept="image/*,video/*" onChange={onPickFile} />
+              <span className="ig-filePickBtn">Select</span>
+              <span className="ig-filePickHint">
+                {file ? file.name : "No file chosen"}
+              </span>
+            </label>
+
+            {renderPreview()}
+
+            <div className="ig-formRow">
+              <input
+                className="ig-input"
+                type="text"
+                placeholder="Write a caption..."
+                value={caption}
+                onChange={(e) => setCaption(e.target.value)}
+              />
+
+              <select
+                className="ig-select"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <option>General</option>
+                <option>Dates</option>
+                <option>Travel</option>
+                <option>Food</option>
+                <option>Random</option>
+              </select>
+            </div>
+
+            <button className="ig-primaryBtn" onClick={handleUpload} disabled={loading || !file}>
+              {loading ? `Posting... ${progress}%` : "Share"}
+            </button>
+
+            {loading && (
+              <div className="ig-progress">
+                <div className="ig-progressBar" style={{ width: `${progress}%` }} />
+              </div>
+            )}
+          </div>
+
+          {/* Posts */}
+          {memories.map((m) => (
+            <div key={m.id} className="ig-card ig-post">
+              <div className="ig-postHeader">
+                <div className="ig-avatar" />
+                <div className="ig-userMeta">
+                  <div className="ig-username">justda2ofus</div>
+                  <div className="ig-sub">
+                    {m.category || "General"} •{" "}
+                    {m.timestamp?.toDate ? m.timestamp.toDate().toLocaleString() : ""}
+                  </div>
                 </div>
+
+                <button className="ig-moreBtn" onClick={() => handleDelete(m.id)} title="Delete">
+                  ⋯
+                </button>
               </div>
 
-              <p className="caption">{m.caption}</p>
+              <div className="ig-mediaFrame">{renderMedia(m)}</div>
 
-              {/* Optional date display */}
-              <p className="date">
-                {m.timestamp?.toDate
-                  ? m.timestamp.toDate().toLocaleString()
-                  : ""}
-              </p>
+              <div className="ig-postActions">
+                <button className="ig-actionBtn" title="Like">♡</button>
+                <button className="ig-actionBtn" title="Comment">💬</button>
+                <button className="ig-actionBtn" title="Share">↗</button>
+                <div className="ig-actionSpacer" />
+                <button className="ig-actionBtn" title="Save">⌁</button>
+              </div>
+
+              <div className="ig-postBody">
+                <div className="ig-captionLine">
+                  <span className="ig-username">justda2ofus</span>
+                  <span className="ig-captionText">
+                    {m.caption || "—"}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Right rail (optional IG-like sidebar) */}
+        <div className="ig-rail">
+          <div className="ig-railCard">
+            <div className="ig-railTop">
+              <div className="ig-avatarLg" />
+              <div>
+                <div className="ig-username">justda2ofus</div>
+                <div className="ig-sub">Private diary feed</div>
+              </div>
+            </div>
+            <div className="ig-railHint">
+              Tip: Keep uploads private. Unsigned presets should restrict size and formats.
             </div>
           </div>
-        ))}
+        </div>
       </div>
     </div>
   );
