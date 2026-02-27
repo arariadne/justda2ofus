@@ -1,0 +1,260 @@
+:root{
+  --paper:#fffdf7;
+  --ink:#262626;
+  --muted:#8e8e8e;
+  --border:#dbdbdb;
+  --pink:#e65fa1;
+  --shadow: 0 18px 60px rgba(0,0,0,0.12);
+}
+
+.nb-wrap{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nb-toolbar{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.nb-btn{
+  border: 1px solid var(--border);
+  background: white;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+.nb-btn:disabled{ opacity: .5; cursor: not-allowed; }
+
+.nb-counter{
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.nb-book{
+  position: relative;
+  width: 100%;
+  height: min(78vh, 720px);
+  border-radius: 18px;
+  background: linear-gradient(180deg, #ffffff, #fbfbfb);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  perspective: 2000px;
+}
+
+.nb-spine{
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.02));
+  transform: translateX(-1px);
+  pointer-events: none;
+}
+
+.nb-stack{
+  position: absolute;
+  inset: 0;
+}
+
+.nb-page{
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
+  pointer-events: none; /* pages don’t block buttons; inner handles interactions */
+}
+
+.nb-pageInner{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 700ms cubic-bezier(.2,.9,.2,1);
+  transform-origin: left center;
+  pointer-events: auto;
+}
+
+.nb-pageInner.flipped{
+  transform: rotateY(-180deg);
+}
+
+.nb-face{
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  background: var(--paper);
+  color: var(--ink);
+  padding: 18px;
+}
+
+.nb-front{
+  border-right: 1px solid rgba(0,0,0,.08);
+}
+
+.nb-back{
+  transform: rotateY(180deg);
+  border-left: 1px solid rgba(0,0,0,.08);
+}
+
+.nb-pageHeader{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.nb-album{
+  font-weight: 1000;
+  letter-spacing: .2px;
+}
+
+.nb-date{
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.nb-frame{
+  width: 100%;
+  height: calc(100% - 140px);
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,.08);
+  background: #000;
+  display: grid;
+  place-items: center;
+}
+
+.nb-media{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: #000;
+}
+
+.nb-mediaNav{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.nb-miniBtn{
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: white;
+  cursor: pointer;
+  font-size: 20px;
+}
+.nb-miniBtn:disabled{ opacity: .45; cursor:not-allowed; }
+
+.nb-dots{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+.nb-dot{
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: #d7d7d7;
+}
+.nb-dot.active{ background: var(--pink); }
+
+.nb-caption{
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+.nb-captionTitle{
+  font-weight: 900;
+}
+
+.nb-pageNumber{
+  position: absolute;
+  bottom: 12px;
+  right: 16px;
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+/* Back side decoration */
+.nb-backText{
+  height: 100%;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: var(--muted);
+}
+.nb-backTitle{
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+.nb-backBody{
+  font-weight: 800;
+}
+
+/* Cover styling */
+.nb-cover{
+  background: linear-gradient(135deg, #ffe4f0, #ffffff);
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+.nb-coverTitle{
+  font-size: 26px;
+  font-weight: 1000;
+  color: #262626;
+}
+.nb-coverSub{
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 800;
+}
+.nb-coverHint{
+  margin-top: 18px;
+  font-size: 12px;
+  color: var(--pink);
+  font-weight: 900;
+}
+.nb-coverBack{
+  background: var(--paper);
+}
+.nb-coverBackText{
+  height: 100%;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 20px;
+  font-weight: 900;
+  color: #444;
+}
+
+/* PDF link */
+.nb-pdfLink{
+  color: white;
+  font-weight: 900;
+  text-decoration: none;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.nb-pdfLink:hover{ text-decoration: underline; }
