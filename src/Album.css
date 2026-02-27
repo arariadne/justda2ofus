@@ -1,0 +1,142 @@
+.album-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: "Poppins", sans-serif;
+  background-color: #fdfdfd;
+}
+
+.album-header {
+  text-align: center;
+  color: #555;
+  margin-bottom: 40px;
+}
+
+.upload-card {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  max-width: 450px;
+  margin: 0 auto 50px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.preview-box {
+  width: 100%;
+  height: 200px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px dashed #e65fa1;
+}
+
+.preview-box img,
+.preview-box video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.caption-input,
+.category-select {
+  padding: 12px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  outline: none;
+}
+
+.save-btn {
+  background: #e65fa1;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.save-btn:disabled {
+  background: #f0a1c9;
+  cursor: not-allowed;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+.memory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+.memory-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.media-box {
+  width: 100%;
+  height: 250px;
+  background: #fafafa;
+}
+
+.media-box img,
+.media-box video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.memory-details {
+  padding: 15px;
+}
+
+.memory-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.category-tag {
+  background: #ffe4f0;
+  color: #e65fa1;
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.admin-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  margin-left: 8px;
+  color: #ddd;
+}
+
+.admin-actions button:hover {
+  color: #e65fa1;
+}
+
+.caption {
+  font-size: 0.95rem;
+  color: #444;
+  margin-bottom: 8px;
+  word-wrap: break-word;
+}
+
+.date {
+  color: #bbb;
+  font-size: 0.8rem;
+}
