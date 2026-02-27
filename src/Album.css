@@ -18,7 +18,9 @@ body { background: var(--bg); color: var(--text); }
 
 /* Page */
 .ig-page{
-  min-height: 100vh;
+ min-height: 100vh;
+  height: auto;
+  overflow-y: visible;
 }
 
 /* Topbar */
